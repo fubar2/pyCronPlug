@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-## written by genwater.py @ Wed Oct 30 11:27:26 2019
+## written by genwater.py @ Wed Oct 30 12:59:55 2019
 from miio import chuangmi_plug
 from time import sleep
 from datetime import datetime
@@ -12,9 +12,9 @@ cP = chuangmi_plug.ChuangmiPlug(ip=IP, token=TOK, start_id=0, debug=0, lazy_disc
 cP.on()
 sleep(0.01)
 tstamp = datetime.now().ctime()
-print('### %s: watering cron job has turned plug on for 14.285714 seconds' % tstamp)
+print('### %s: watering cron job has turned plug on for 11.764706 seconds' % tstamp)
 print(cP.status())
-sleep(14.285714)
+sleep(11.764706)
 cP.off()
 sleep(0.01)
 tstamp = datetime.now().ctime()

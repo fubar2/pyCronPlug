@@ -25,12 +25,12 @@ Generated crontab using defaults:
 ```
 # written by genwater.py @ Wed Oct 30 09:21:23 2019
 # m h dom mon dow command
+1       4       *       *       *       /home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/python-miio/runmeNight.py 2>&1 >> /home/ross/rossgit/python-miio/watercron.log
 1       9       *       *       *       /home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/python-miio/runmeDay.py 2>&1 >> /home/ross/rossgit/python-miio/watercron.log
 1       12      *       *       *       /home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/python-miio/runmeDay.py 2>&1 >> /home/ross/rossgit/python-miio/watercron.log
 1       13      *       *       *       /home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/python-miio/runmeDay.py 2>&1 >> /home/ross/rossgit/python-miio/watercron.log
 1       16      *       *       *       /home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/python-miio/runmeDay.py 2>&1 >> /home/ross/rossgit/python-miio/watercron.log
 1       22      *       *       *       /home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/python-miio/runmeNight.py 2>&1 >> /home/ross/rossgit/python-miio/watercron.log
-1       4       *       *       *       /home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/python-miio/runmeNight.py 2>&1 >> /home/ross/rossgit/python-miio/watercron.log
 ```
 Generated daytime script
 

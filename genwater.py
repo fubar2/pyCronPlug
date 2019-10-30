@@ -1,7 +1,11 @@
+#!/usr/bin/python3
 # mad idea
 # generate cron file to run a miiplug for a given number of seconds mostly during the day
 # since we are watering plants.
-# m h dom mon dow command
+# adjust the constants in SKEL to suit your device and the constants controlling total water time, hours to trigger watering in day and night 
+# and the code will allocate the watering time so your night time watering is the equivalent of 1/DAYWEIGHT of a day time watering. 
+# may need fiddling with to ensure all plants are totally soaked to maximum weight each watering event.
+# plug pump into the xiaomi mi-plug so it runs under control of the cron jobs
 # idea comes from watching weights not peak properly after day time waterings - most water is used during the day....
 
 
@@ -18,7 +22,7 @@ PYPATH="/home/ross/rossgit/loadcellflask/venv/bin/python"
 
 TOTTIME=200 # total seconds turned on per 24 hours
 DAYWEIGHT=3 # 3 times as much during day as night
-DAYWTIMES = [9,12,13,16] # run a day time watering at each of these hours
+DAYWTIMES = [9,11,13,15,17] # run a day time watering at each of these hours
 NIGHTWTIMES = [22,4] # and these for night
 CRONTABFILE = os.path.join(MYPATH,'gencrontab.txt')
 
