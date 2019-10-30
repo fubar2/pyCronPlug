@@ -19,25 +19,24 @@ class CFG():
     # the following template is the code for each cron job - day or night vary only by name and sleep duration. It
 	# gets instantiated to populate the strings in the header and the duration
 	SKEL = """#!%s
-	## written by %s @ %s
-	from miio import chuangmi_plug
-	from time import sleep
-	from datetime import datetime
- 
-	IP="192.x.x.x"
-	TOK="xxxxx" # mine not yours...
+##written by %s @ %s
+from miio import chuangmi_plug
+from time import sleep
+from datetime import datetime
 
-	cP = chuangmi_plug.ChuangmiPlug(ip=IP, token=TOK, start_id=0, debug=0, lazy_discover=True, model='chuangmi.plug.m1')
-	cP.on()
-	sleep(0.01)
-	tstamp = datetime.now().ctime()
-	print('### %%s: watering cron job has turned plug on for %f seconds' %% tstamp)
-	print(cP.status())
-	sleep(%f)
-	cP.off()
-	sleep(0.01)
-	tstamp = datetime.now().ctime()
-	print('### %%s: watering cron job has turned plug off' %% tstamp)
-	print(cP.status())
+IP="192.x.x.x"
+TOK="xxxxx" # mine not yours...
 
-	"""
+cP = chuangmi_plug.ChuangmiPlug(ip=IP, token=TOK, start_id=0, debug=0, lazy_discover=True, model='chuangmi.plug.m1')
+cP.on()
+sleep(0.01)
+tstamp = datetime.now().ctime()
+print('### %%s: watering cron job has turned plug on for %f seconds' %% tstamp)
+print(cP.status())
+sleep(%f)
+cP.off()
+sleep(0.01)
+tstamp = datetime.now().ctime()
+print('### %%s: watering cron job has turned plug off' %% tstamp)
+print(cP.status())
+"""
