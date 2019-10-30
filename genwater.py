@@ -21,46 +21,8 @@ import datetime
 
 MYPATH = os.getcwd() # where cron jobs can find the generated scripts
 MYNAME = sys.argv[0] # our name
-
-PYPATH="/home/ross/rossgit/loadcellflask/venv/bin/python" 
-# find this path using `which python` while in a virtual environment - must use the same VM for cron jobs 
-
-TOTTIME=180 # total seconds turned on per 24 hours
-DAYWEIGHT=2 # night total will be one daytime/weight long
-DAYWTIMES = [9,11,13,15,17,19] # run a day time watering at each of these hours
-NIGHTWTIMES = [23,3] # and these for night
-CRONTABFILE = os.path.join(MYPATH,'gencrontab.txt')
-
-LOGTO = 'watercron.log'
-
-# adjust the script skeleton to suit your chuangmi plug token and ip
-# see above in mirobo discover
-
-SKEL = """#!/usr/bin/python3
-## written by %s @ %s
-from miio import chuangmi_plug
-from time import sleep
-from datetime import datetime
-
-
-IP="192.168.1.30"
-TOK="3530efcedbd24a95df4716de429a7b0c" # mine not yours...
-
-cP = chuangmi_plug.ChuangmiPlug(ip=IP, token=TOK, start_id=0, debug=0, lazy_discover=True, model='chuangmi.plug.m1')
-cP.on()
-sleep(0.01)
-tstamp = datetime.now().ctime()
-print('### %%s: watering cron job has turned plug on for %f seconds' %% tstamp)
-print(cP.status())
-sleep(%f)
-cP.off()
-sleep(0.01)
-tstamp = datetime.now().ctime()
-print('### %%s: watering cron job has turned plug off' %% tstamp)
-print(cP.status())
-
-"""
-
+from config import CFG
+CRONTABFNAME = os.path.join(MYPATH,CFG.CTF)
 
 
 def getCronf(task,hours2run):
@@ -69,16 +31,16 @@ def getCronf(task,hours2run):
 	Jobs run at 1 minute past the specified hour
 	"""
 	writeme = []
-	cl = '%s %s' % (PYPATH, os.path.join(MYPATH,task))
+	cl = '%s %s' % (CFG.PYPATH, os.path.join(MYPATH,task))
 	for i,h in enumerate(hours2run):
-		s = '1	%s	*	*	*	%s 2>&1 >> %s\n' % (h,cl,os.path.join(MYPATH,LOGTO))
+		s = '1	%s	*	*	*	%s 2>&1 >> %s\n' % (h,cl,os.path.join(MYPATH,CFG.LOGTO))
 		writeme.append(s)
 	return writeme
 
 def writeCronf(cronlist):
 	"""
 	"""
-	f = open(CRONTABFILE,'w')
+	f = open(CRONTABFNAME,'w')
 	now = datetime.datetime.now().ctime()
 	f.write('# written by %s @ %s\n# m h dom mon dow command\n' % (MYNAME,now))
 	f.write(''.join(cronlist))
@@ -89,7 +51,7 @@ def writeTask(taskName,hourtorun,duration):
 	Instantiate a script to turn the plug on for a specified time based on SKEL
 	"""
 	now = datetime.datetime.now().ctime()
-	scrpt = SKEL % (MYNAME,now,duration,duration)
+	scrpt = CFG.SKEL % (MYNAME,now,duration,duration)
 	f = open(taskName,'w')
 	f.write(scrpt)
 	f.close()
@@ -97,22 +59,22 @@ def writeTask(taskName,hourtorun,duration):
 
 def genCron():
 	"""figure watering pattern to a total, weighted during the day for far less at night"""
-	nDay = len(DAYWTIMES)
-	nNight = len(NIGHTWTIMES)
-	dayT = DAYWEIGHT*(TOTTIME/(nNight + nDay*DAYWEIGHT)) 
+	nDay = len(CFG.DAYWTIMES)
+	nNight = len(CFG.NIGHTWTIMES)
+	dayT = CFG.DAYWEIGHT*(CFG.TOTTIME/(nNight + nDay*CFG.DAYWEIGHT)) 
 	# algebra for 1/weight of a day water at night
-	nightT  = (TOTTIME - nDay*dayT)/nNight # total watering at night for weightX during each day
+	nightT  = (CFG.TOTTIME - nDay*dayT)/nNight # total watering at night for weightX during each day
 	tN = 'runmeDay.py'
-	writeTask(tN,DAYWTIMES,dayT)
-	cronrows = getCronf(tN,DAYWTIMES)
+	writeTask(tN,CFG.DAYWTIMES,dayT)
+	cronrows = getCronf(tN,CFG.DAYWTIMES)
 	tN = 'runmeNight.py'
-	writeTask(tN,NIGHTWTIMES,nightT)
-	cronrows += getCronf(tN,NIGHTWTIMES)
+	writeTask(tN,CFG.NIGHTWTIMES,nightT)
+	cronrows += getCronf(tN,CFG.NIGHTWTIMES)
 	cl = [(int(x.split('\t')[1]),x) for x in cronrows] # decorate with hour
 	cl.sort()
 	cl = [x[1] for x in cl] # undecorate
 	writeCronf(cl)
-	os.system('crontab %s' % CRONTABFILE)
+	os.system('crontab %s' % CRONTABFNAME)
 	print('#### Updated your crontab file with:\n',''.join(cl))
 
 if __name__ == "__main__":
