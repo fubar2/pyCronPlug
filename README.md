@@ -4,7 +4,7 @@ Created to replace a simple ebay timer used to control watering duration and tim
 
 Cron job and crontab generator designed to control automated watering times using a mi-plug. Uses python-miio to control a Xiaomi smart 240v plug through
 a Xiaomi hub. Generates two python scripts, one for day an done for night that turn the plug on for a calculated amount of time.
-User supplies 
+User supplies:
 
 * hours at which each script should be run as a separate list - e.g. [9,12,15,18], [22,4] for day and night
 * the total time on - pumping seconds per 24 hours
@@ -32,7 +32,7 @@ Generated crontab using defaults:
 1       22      *       *       *       /home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/python-miio/runmeNight.py 2>&1 >> /home/ross/rossgit/python-miio/watercron.log
 1       4       *       *       *       /home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/python-miio/runmeNight.py 2>&1 >> /home/ross/rossgit/python-miio/watercron.log
 ```
-The daytime script
+Generated daytime script
 
 ```
 #!/usr/bin/python3
