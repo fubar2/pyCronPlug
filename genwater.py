@@ -7,7 +7,12 @@
 # may need fiddling with to ensure all plants are totally soaked to maximum weight each watering event.
 # plug pump into the xiaomi mi-plug so it runs under control of the cron jobs
 # idea comes from watching weights not peak properly after day time waterings - most water is used during the day....
-
+# use mirobo to get chuangmi plug token - it can't be found otherwise as it doesn't hook into the gateway's list of devices...go figure
+# >mirobo discover
+# INFO:miio.discovery:Discovering devices with mDNS, press any key to quit...
+# INFO:miio.discovery:Found a supported 'ChuangmiPlug' at xxxxxxxxxxxxxx - token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+# INFO:miio.discovery:lumi-gateway-v3_miio73062210._miio._udp.local. @ xxxxxxxxxx, check https://github.com/Danielhiversen/PyXiaomiGateway: token: 00000000000000000000000000000000
+# needs python-miio
 
 import os
 import sys
@@ -20,16 +25,16 @@ MYNAME = sys.argv[0] # our name
 PYPATH="/home/ross/rossgit/loadcellflask/venv/bin/python" 
 # find this path using `which python` while in a virtual environment - must use the same VM for cron jobs 
 
-TOTTIME=200 # total seconds turned on per 24 hours
-DAYWEIGHT=3 # 3 times as much during day as night
-DAYWTIMES = [9,11,13,15,17] # run a day time watering at each of these hours
-NIGHTWTIMES = [22,4] # and these for night
+TOTTIME=180 # total seconds turned on per 24 hours
+DAYWEIGHT=2 # night total will be one daytime/weight long
+DAYWTIMES = [9,11,13,15,17,19] # run a day time watering at each of these hours
+NIGHTWTIMES = [23,3] # and these for night
 CRONTABFILE = os.path.join(MYPATH,'gencrontab.txt')
 
 LOGTO = 'watercron.log'
 
 # adjust the script skeleton to suit your chuangmi plug token and ip
-# obtaining these is left as an exercise for the reader :)
+# see above in mirobo discover
 
 SKEL = """#!/usr/bin/python3
 ## written by %s @ %s
@@ -95,8 +100,8 @@ def genCron():
 	nDay = len(DAYWTIMES)
 	nNight = len(NIGHTWTIMES)
 	dayT = DAYWEIGHT*(TOTTIME/(nNight + nDay*DAYWEIGHT)) 
-	# algebra for 1/3 of a day water at night
-	nightT  = (TOTTIME - nDay*dayT)/nNight # total watering at night for 3X during day
+	# algebra for 1/weight of a day water at night
+	nightT  = (TOTTIME - nDay*dayT)/nNight # total watering at night for weightX during each day
 	tN = 'runmeDay.py'
 	writeTask(tN,DAYWTIMES,dayT)
 	cronrows = getCronf(tN,DAYWTIMES)
