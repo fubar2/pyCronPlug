@@ -22,7 +22,8 @@ Yes, this can all be done manually but hey. this is git.
 
 Generated crontab using defaults:
 
-># written by genwater.py @ Wed Oct 30 09:21:23 2019
+```
+# written by genwater.py @ Wed Oct 30 09:21:23 2019
 # m h dom mon dow command
 1       9       *       *       *       /home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/python-miio/runmeDay.py 2>&1 >> /home/ross/rossgit/python-miio/watercron.log
 1       12      *       *       *       /home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/python-miio/runmeDay.py 2>&1 >> /home/ross/rossgit/python-miio/watercron.log
@@ -30,10 +31,11 @@ Generated crontab using defaults:
 1       16      *       *       *       /home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/python-miio/runmeDay.py 2>&1 >> /home/ross/rossgit/python-miio/watercron.log
 1       22      *       *       *       /home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/python-miio/runmeNight.py 2>&1 >> /home/ross/rossgit/python-miio/watercron.log
 1       4       *       *       *       /home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/python-miio/runmeNight.py 2>&1 >> /home/ross/rossgit/python-miio/watercron.log
-
+```
 The daytime script
 
->#!/usr/bin/python3
+```
+#!/usr/bin/python3
 ## written by genwater.py @ Wed Oct 30 09:21:23 2019
 from miio import chuangmi_plug
 from time import sleep
@@ -55,10 +57,11 @@ sleep(0.01)
 tstamp = datetime.now().ctime()
 print('### %s: watering cron job has turned plug off' % tstamp)
 print(cP.status())
-
+```
 and nighttime script
 
->#!/usr/bin/python3
+```
+#!/usr/bin/python3
 ## written by genwater.py @ Wed Oct 30 09:21:23 2019
 from miio import chuangmi_plug
 from time import sleep
@@ -80,4 +83,4 @@ sleep(0.01)
 tstamp = datetime.now().ctime()
 print('### %s: watering cron job has turned plug off' % tstamp)
 print(cP.status())
-
+```
