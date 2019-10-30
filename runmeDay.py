@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-## written by genwater.py @ Wed Oct 30 09:21:23 2019
+## written by genwater.py @ Wed Oct 30 11:27:26 2019
 from miio import chuangmi_plug
 from time import sleep
 from datetime import datetime

@@ -10,21 +10,23 @@ import sys
 from pathlib import Path
 import datetime
 
-MYPATH = os.getcwd() # 
+MYPATH = os.getcwd() # where cron jobs can find the generated scripts
 MYNAME = sys.argv[0] # our name
 
 PYPATH="/home/ross/rossgit/loadcellflask/venv/bin/python" 
 # find this path using `which python` while in a virtual environment - must use the same VM for cron jobs 
-PERDAY=6
-TOTTIME=200
+
+TOTTIME=200 # total seconds turned on per 24 hours
 DAYWEIGHT=3 # 3 times as much during day as night
-DAYWTIMES = [9,12,13,16]
-NIGHTWTIMES = [22,4]
+DAYWTIMES = [9,12,13,16] # run a day time watering at each of these hours
+NIGHTWTIMES = [22,4] # and these for night
 CRONTABFILE = os.path.join(MYPATH,'gencrontab.txt')
 
 LOGTO = 'watercron.log'
+
 # adjust the script skeleton to suit your chuangmi plug token and ip
 # obtaining these is left as an exercise for the reader :)
+
 SKEL = """#!/usr/bin/python3
 ## written by %s @ %s
 from miio import chuangmi_plug
@@ -54,6 +56,8 @@ print(cP.status())
 
 def getCronf(task,hours2run):
 	"""
+	construct paths to our generated code and use specified virtual python path for each cron command
+	Jobs run at 1 minute past the specified hour
 	"""
 	writeme = []
 	cl = '%s %s' % (PYPATH, os.path.join(MYPATH,task))
@@ -72,6 +76,9 @@ def writeCronf(cronlist):
 	f.close()
 
 def writeTask(taskName,hourtorun,duration):
+	""" 
+	Instantiate a script to turn the plug on for a specified time based on SKEL
+	"""
 	now = datetime.datetime.now().ctime()
 	scrpt = SKEL % (MYNAME,now,duration,duration)
 	f = open(taskName,'w')
@@ -83,7 +90,7 @@ def genCron():
 	"""figure watering pattern to a total, weighted during the day for far less at night"""
 	nDay = len(DAYWTIMES)
 	nNight = len(NIGHTWTIMES)
-	dayT = DAYWEIGHT*(TOTTIME/(nNight + nDay*DAYWEIGHT))
+	dayT = DAYWEIGHT*(TOTTIME/(nNight + nDay*DAYWEIGHT)) 
 	# algebra for 1/3 of a day water at night
 	nightT  = (TOTTIME - nDay*dayT)/nNight # total watering at night for 3X during day
 	tN = 'runmeDay.py'
@@ -92,9 +99,12 @@ def genCron():
 	tN = 'runmeNight.py'
 	writeTask(tN,NIGHTWTIMES,nightT)
 	cronrows += getCronf(tN,NIGHTWTIMES)
-	writeCronf(cronrows)
+	cl = [(int(x.split('\t')[1]),x) for x in cronrows] # decorate with hour
+	cl.sort()
+	cl = [x[1] for x in cl] # undecorate
+	writeCronf(cl)
 	os.system('crontab %s' % CRONTABFILE)
-	print('Updated your crontab file with:\n',''.join(cronrows))
+	print('#### Updated your crontab file with:\n',''.join(cl))
 
 if __name__ == "__main__":
 	genCron()
