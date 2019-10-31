@@ -3,10 +3,12 @@
 Created to replace a simple ebay timer used to control watering duration and time because it only allows watering times to be fixed over both day and night.
 
 Cron job and crontab generator designed to control automated watering times using a mi-plug. Uses python-miio to control a Xiaomi smart 240v plug through
-a Xiaomi hub. Generates two python scripts, one for day an done for night that turn the plug on for a calculated amount of time.
+a Xiaomi hub. Generates two python scripts from the same template in config.py, one for day and done for night. They both turn the plug on for the specified amount of time
+for day or night waterings. The pump wall wart is plugged into the smart plug so it runs whenever the plug is on, pumping nutrients for the scheduled duration.
 
 Copy config.py.sample to config.py before running anything and fix the token, IP and other important details to suit your needs:
 
+* token and ip for the switch to be controlled. These go into config.py. Nothing works without them. See config.py.sample for an example.
 * hours at which each script should be run as a separate list - e.g. [9,12,15,18], [22,4] for day and night
 * the total time on - pumping seconds per 24 hours
 * the weighting for daytime watering - e.g. 2 so night waterings total 1/2 of each daytime watering.

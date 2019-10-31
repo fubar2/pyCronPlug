@@ -61,7 +61,7 @@ def genCron():
 	"""figure watering pattern to a total, weighted during the day for far less at night"""
 	nDay = len(CFG.DAYWTIMES)
 	nNight = len(CFG.NIGHTWTIMES)
-	dayT = CFG.DAYWEIGHT*(CFG.TOTTIME/(nNight + nDay*CFG.DAYWEIGHT)) 
+	dayT = float(CFG.DAYWEIGHT)*(CFG.TOTTIME/(nNight + nDay*CFG.DAYWEIGHT)) 
 	# algebra for 1/weight of a day water at night
 	nightT  = (CFG.TOTTIME - nDay*dayT)/nNight # total watering at night for weightX during each day
 	tN = 'runmeDay.py'
