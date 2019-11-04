@@ -1,4 +1,4 @@
-# written by genwater.py @ Thu Oct 31 21:33:49 2019
+# written by genwater.py @ Mon Nov  4 11:09:53 2019
 # m h dom mon dow command
 1	2	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeNight.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
 1	5	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeNight.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
