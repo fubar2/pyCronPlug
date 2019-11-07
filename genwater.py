@@ -51,7 +51,7 @@ def writeTask(taskName,hourtorun,duration):
 	Instantiate a script to turn the plug on for a specified time based on SKEL
 	"""
 	now = datetime.datetime.now().ctime()
-	scrpt = CFG.SKEL % (CFG.PYPATH,MYNAME,now,duration,duration)
+	scrpt = CFG.SKEL % (CFG.PYPATH,MYNAME,now,CFG.IP,CFG.TOK,duration,duration)
 	f = open(taskName,'w')
 	f.write(scrpt)
 	f.close()

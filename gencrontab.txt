@@ -1,11 +1,12 @@
-# written by genwater.py @ Mon Nov  4 11:09:53 2019
+# written by genwater.py @ Thu Nov  7 20:39:38 2019
 # m h dom mon dow command
 1	2	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeNight.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
 1	5	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeNight.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
-1	9	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeDay.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
-1	11	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeDay.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
-1	13	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeDay.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
-1	15	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeDay.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
-1	17	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeDay.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
-1	19	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeDay.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
-1	23	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeNight.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
+1	6	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeDay.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
+1	8	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeDay.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
+1	10	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeDay.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
+1	12	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeDay.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
+1	14	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeDay.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
+1	16	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeDay.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
+1	18	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeDay.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
+1	22	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeNight.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
