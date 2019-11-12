@@ -16,27 +16,34 @@ class CFG():
 	# mirobo to get chuangmi plug token - it can't be found otherwise as it doesn't hook into the gateway's list of devices...go figure
     # >mirobo discover
     # note - adding the discovery command just resulted in a timeout for me - unadorned discovery found my plug
+        IP = "x.x.x.x"
+	TOK = "xxxxxxxxxxxxx..."
     # the following template is the code for each cron job - day or night vary only by name and sleep duration. It
 	# gets instantiated to populate the strings in the header and the duration
 	SKEL = """#!%s
-##written by %s @ %s
+## written by %s @ %s
 from miio import chuangmi_plug
 from time import sleep
 from datetime import datetime
 
-IP="192.x.x.x"
-TOK="xxxxx" # mine not yours...
+SHORT = 0.01
+IP="%s"
+TOK="%s"
 
 cP = chuangmi_plug.ChuangmiPlug(ip=IP, token=TOK, start_id=0, debug=0, lazy_discover=True, model='chuangmi.plug.m1')
 cP.on()
-sleep(0.01)
+sleep(SHORT) 
+cP.on() # in case fails
+sleep(SHORT)
 tstamp = datetime.now().ctime()
 print('### %%s: watering cron job has turned plug on for %f seconds' %% tstamp)
 print(cP.status())
 sleep(%f)
 cP.off()
-sleep(0.01)
+sleep(SHORT)
+cP.off() # sometimes fails !!!
 tstamp = datetime.now().ctime()
 print('### %%s: watering cron job has turned plug off' %% tstamp)
 print(cP.status())
 """
+

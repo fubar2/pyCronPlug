@@ -1,8 +1,9 @@
 #!/usr/bin/python3
+# needs python-miio to control a chuangmi/xiaomi 240 v wireless plug
 # mad idea
 # generate cron file to run a miiplug for a given number of seconds mostly during the day
 # since we are watering plants.
-# adjust the constants in SKEL to suit your device and the constants controlling total water time, hours to trigger watering in day and night 
+# adjust the constants in SKEL to suit your device and the constants in config.py controlling total water time, hours to trigger watering in day and night 
 # and the code will allocate the watering time so your night time watering is the equivalent of 1/DAYWEIGHT of a day time watering. 
 # may need fiddling with to ensure all plants are totally soaked to maximum weight each watering event.
 # plug pump into the xiaomi mi-plug so it runs under control of the cron jobs
@@ -12,7 +13,7 @@
 # INFO:miio.discovery:Discovering devices with mDNS, press any key to quit...
 # INFO:miio.discovery:Found a supported 'ChuangmiPlug' at xxxxxxxxxxxxxx - token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 # INFO:miio.discovery:lumi-gateway-v3_miio73062210._miio._udp.local. @ xxxxxxxxxx, check https://github.com/Danielhiversen/PyXiaomiGateway: token: 00000000000000000000000000000000
-# needs python-miio
+
 
 import os
 import sys
@@ -61,21 +62,29 @@ def genCron():
 	"""figure watering pattern to a total, weighted during the day for far less at night"""
 	nDay = len(CFG.DAYWTIMES)
 	nNight = len(CFG.NIGHTWTIMES)
-	dayT = float(CFG.DAYWEIGHT)*(CFG.TOTTIME/(nNight + nDay*CFG.DAYWEIGHT)) 
+	dayT = float(CFG.DAYWEIGHT)*(CFG.TOTTIME/(nNight + nDay*CFG.DAYWEIGHT))
+	ncronrows = []
+	dcronrows = []
+	if nDay > 0:
+		tN = 'runmeDay.py'
+		writeTask(tN,CFG.DAYWTIMES,dayT)
+		dcronrows = getCronf(tN,CFG.DAYWTIMES)
+	if nNight > 0: 
 	# algebra for 1/weight of a day water at night
-	nightT  = (CFG.TOTTIME - nDay*dayT)/nNight # total watering at night for weightX during each day
-	tN = 'runmeDay.py'
-	writeTask(tN,CFG.DAYWTIMES,dayT)
-	cronrows = getCronf(tN,CFG.DAYWTIMES)
-	tN = 'runmeNight.py'
-	writeTask(tN,CFG.NIGHTWTIMES,nightT)
-	cronrows += getCronf(tN,CFG.NIGHTWTIMES)
-	cl = [(int(x.split('\t')[1]),x) for x in cronrows] # decorate with hour
-	cl.sort()
-	cl = [x[1] for x in cl] # undecorate
-	writeCronf(cl)
-	os.system('crontab %s' % CRONTABFNAME)
-	print('#### Updated your crontab file with:\n',''.join(cl))
+		nightT  = (CFG.TOTTIME - nDay*dayT)/nNight # total watering at night for weightX during each day
+		tN = 'runmeNight.py'
+		writeTask(tN,CFG.NIGHTWTIMES,nightT)
+		ncronrows = getCronf(tN,CFG.NIGHTWTIMES)
+	cronrows = ncronrows + dcronrows
+	if len(cronrows) > 0:
+		cl = [(int(x.split('\t')[1]),x) for x in cronrows] # decorate with hour
+		cl.sort()
+		cl = [x[1] for x in cl] # undecorate
+		writeCronf(cl)
+		os.system('crontab %s' % CRONTABFNAME)
+		print('#### Updated your crontab file with:\n',''.join(cl))
+	else:
+		print('#### Found no times for jobs specified in config.py - nothing done')
 
 if __name__ == "__main__":
 	genCron()

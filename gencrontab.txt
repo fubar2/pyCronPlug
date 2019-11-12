@@ -1,12 +1,7 @@
-# written by genwater.py @ Thu Nov  7 20:39:38 2019
+# written by genwater.py @ Mon Nov 11 20:22:43 2019
 # m h dom mon dow command
-1	2	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeNight.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
-1	5	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeNight.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
-1	6	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeDay.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
-1	8	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeDay.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
-1	10	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeDay.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
+1	7	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeDay.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
+1	9	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeDay.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
 1	12	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeDay.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
-1	14	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeDay.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
-1	16	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeDay.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
+1	15	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeDay.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
 1	18	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeDay.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
-1	22	*	*	*	/home/ross/rossgit/loadcellflask/venv/bin/python /home/ross/rossgit/pyCronPlug/runmeNight.py 2>&1 >> /home/ross/rossgit/pyCronPlug/watercron.log
